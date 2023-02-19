@@ -1,0 +1,28 @@
+body {
+    background-color: black;
+}
+
+.box {
+    margin: 50px auto;
+    font-size: 100px;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    color:rgb(201, 179, 179)
+}
+
+.box div {
+    height: 144px;
+}
+
+.border-bottom,
+.border-right {
+    border-width: 2px !important;
+    border-color: white !important;
+}
+
+.players {
+    font-weight: 100;
+    font-size: 20px;
+}

@@ -8,13 +8,13 @@ let computer = []
 let playerResultCounter = 0
 let computerResultCounter = 0
 let drawResultCounter = 0
-let checkEqual = false;
+let checkDraw = false;
 
 
 const clearTable = () => {
     player = [];
     computer = [];
-    arrComb = [];
+    availableSquare = [];
     for (let i = 0; i < square.length; i++) {
         square[i].onclick = () => { return true }
         square[i].dataset.bool = "true"
@@ -36,27 +36,27 @@ const start = () => {
 
         square[i].onclick = () => {
 
-            let arrComb = []
+            let availableSquare = []
 
             square[i].innerHTML = "X"
 
-            // clicked square
+            // set unavailable square
             if (square[i].dataset.bool == "true") {
                 square[i].dataset.bool = "false"
                 square[i].onclick = () => { return false }
             }
 
-            // get all unmarked squares
+            // get all available squares
             for (let iter = 0; iter < square.length; iter++) {
                 if (square[iter].dataset.bool == 'true') {
-                    arrComb = [...arrComb, iter]
+                    availableSquare = [...availableSquare, iter]
                 }
             }
 
 
-            if (arrComb.length == 0) {
-                checkEqual = true
-                arrComb = [parseInt(square[i].dataset.value) - 1]
+            if (availableSquare.length == 0) {
+                checkDraw = true
+                availableSquare = [parseInt(square[i].dataset.value) - 1]
 
 
             } else {
@@ -72,14 +72,14 @@ const start = () => {
                 }
 
                 // computer combinations
-                const result = getRandomItem(arrComb);
+                const result = getRandomItem(availableSquare);
                 square[result].innerHTML = "O"
                 square[result].dataset.bool = "false"
                 square[result].onclick = () => { return false }
-                const index = arrComb.indexOf(result);
-                arrComb.splice(index, 1);
+                const index = availableSquare.indexOf(result);
+                availableSquare.splice(index, 1);
                 computer = [...computer, result + 1]
-                arrComb = [...arrComb]
+                availableSquare = [...availableSquare]
             }
 
             // player combinations
@@ -96,9 +96,9 @@ const start = () => {
                 computerElements = combinations[a].every(elem => computer.includes(elem));
 
                 // player win
-                if (playerElements == true || playerElements == true && checkEqual == true) {
+                if (playerElements == true || playerElements == true && checkDraw == true) {
                     desibleSquare()
-                    checkEqual = false
+                    checkDraw = false
                     playerResultCounter++
                     playerResult.innerHTML = playerResultCounter
 
@@ -130,10 +130,10 @@ const start = () => {
             }
 
             // draw
-            if (checkEqual == true && playerElements == false) {
+            if (checkDraw == true && playerElements == false) {
                 drawResultCounter++
                 drawResult.innerHTML = drawResultCounter;
-                checkEqual = false
+                checkDraw = false
                 setTimeout(function () {
                     clearTable()
                 }, 1000);
